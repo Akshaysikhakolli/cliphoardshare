@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📋 Clipboard Blocks</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+<header class="header">
+  <div class="logo-title">
+    <img src="https://img.icons8.com/emoji/48/clipboard-emoji.png" alt="Clipboard" />
+    <span class="logo-text">Clipboard Blocks</span>
+  </div>
+</header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <textarea id="newBlock" placeholder="✍️ Type your text here..."></textarea>
+    <button id="addBlockBtn">➕ Add Block</button>
+    <button id="clearAllBtn">🧹 Clear All Blocks</button>
+    <div id="blocksContainer"></div>
+  </div>
+
+  <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-content">
+    <p class="footer-center">&copy; 2025 Clipboard Blocks. All rights reserved.</p>
+    <p class="footer-right">&copy;Made by Akshay</p>
+  </div>
+</footer>
+
+
+ <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
