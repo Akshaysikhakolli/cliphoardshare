@@ -16,9 +16,10 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // 🔑 Fix: Prefer WebSockets (avoid 400 Bad Request logs from long-polling terminate)
+// Note: GitHub Pages often blocks WebSockets, so Firestore may still fallback.
 db.settings({
   experimentalForceLongPolling: false,
-  experimentalAutoDetectLongPolling: false
+  experimentalAutoDetectLongPolling: true // fallback if WebSockets fail
 });
 
 // DOM Elements
