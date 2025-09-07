@@ -1,4 +1,4 @@
-// Firebase CDN version for browser (no need for modules)
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyCB1kELfuQmIkMoC09gNxqigPXk6MNk1M8",
   authDomain: "sharingclip-7ead7.firebaseapp.com",
@@ -11,7 +11,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// Get Firestore
 const db = firebase.firestore();
+
+// 🔑 Fix: Force WebSockets (avoid 400 errors from long-polling terminate)
+db.settings({
+  experimentalForceLongPolling: false,
+  experimentalAutoDetectLongPolling: false
+});
 
 // DOM Elements
 const blocksContainer = document.getElementById("blocksContainer");
@@ -19,7 +27,7 @@ const addBlockBtn = document.getElementById("addBlockBtn");
 const clearAllBtn = document.getElementById("clearAllBtn");
 const newBlock = document.getElementById("newBlock");
 
-// Realtime listener
+// Realtime Listener
 db.collection("blocks")
   .orderBy("timestamp")
   .onSnapshot(snapshot => {
@@ -29,7 +37,7 @@ db.collection("blocks")
     });
   });
 
-// Create block UI
+// Create Block UI
 function createBlock(id, text) {
   const block = document.createElement("div");
   block.className = "block";
@@ -61,7 +69,7 @@ function createBlock(id, text) {
   blocksContainer.appendChild(block);
 }
 
-// Add block to Firestore
+// Add Block
 addBlockBtn.onclick = () => {
   const text = newBlock.value.trim();
   if (text) {
@@ -73,7 +81,7 @@ addBlockBtn.onclick = () => {
   }
 };
 
-// Clear all blocks from Firestore
+// Clear All Blocks
 clearAllBtn.onclick = async () => {
   const snapshot = await db.collection("blocks").get();
   snapshot.forEach(doc => doc.ref.delete());
