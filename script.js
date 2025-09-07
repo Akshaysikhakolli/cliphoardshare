@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 // Get Firestore
 const db = firebase.firestore();
 
-// 🔑 Fix: Force WebSockets (avoid 400 errors from long-polling terminate)
+// 🔑 Fix: Prefer WebSockets (avoid 400 Bad Request logs from long-polling terminate)
 db.settings({
   experimentalForceLongPolling: false,
   experimentalAutoDetectLongPolling: false
@@ -27,7 +27,7 @@ const addBlockBtn = document.getElementById("addBlockBtn");
 const clearAllBtn = document.getElementById("clearAllBtn");
 const newBlock = document.getElementById("newBlock");
 
-// Realtime Listener
+// Realtime listener
 db.collection("blocks")
   .orderBy("timestamp")
   .onSnapshot(snapshot => {
@@ -37,7 +37,7 @@ db.collection("blocks")
     });
   });
 
-// Create Block UI
+// Create block UI
 function createBlock(id, text) {
   const block = document.createElement("div");
   block.className = "block";
@@ -69,7 +69,7 @@ function createBlock(id, text) {
   blocksContainer.appendChild(block);
 }
 
-// Add Block
+// Add block to Firestore
 addBlockBtn.onclick = () => {
   const text = newBlock.value.trim();
   if (text) {
@@ -81,7 +81,7 @@ addBlockBtn.onclick = () => {
   }
 };
 
-// Clear All Blocks
+// Clear all blocks from Firestore
 clearAllBtn.onclick = async () => {
   const snapshot = await db.collection("blocks").get();
   snapshot.forEach(doc => doc.ref.delete());
